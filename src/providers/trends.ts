@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers} from '@angular/http';
+import { Trend } from '../model/trend';
 import 'rxjs/add/operator/map';
+import {Observable} from 'rxjs/Rx';
 
 /*
   Generated class for the Trends provider.
@@ -12,42 +14,19 @@ import 'rxjs/add/operator/map';
 export class TrendsProvider {
 
     data: any;
-    private trendsUrl = 'http://localhost:8080/api/trends/';
+    keywordsUrl = "http://localhost:3000/trends/";
 
     constructor(public http: Http) {
         this.data = null;
     }
 
     // Get all posts from the API
-    getTrends() {
-        if (this.data) {
-            return Promise.resolve(this.data);
-        }
-
-        return new Promise(resolve => {
-            this.http.get(this.trendsUrl)
-                .map(res => res.json())
-                .subscribe(data => {
-                    this.data = data;
-                    resolve(this.data);
-                });
-        });
-    }
-
-    createTrend(trend) {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-
-        this.http.post(this.trendsUrl, JSON.stringify(trend), { headers: headers })
-            .subscribe(res => {
-                console.log(res.json());
-            });
-    }
-
-    deleteTrend(id) {
-        this.http.delete(this.trendsUrl + id).subscribe((res) => {
-            console.log(res.json());
-        });
+    getTrend(keyword): Observable<Trend[]> {
+        // if (this.data) {
+        //     return Promise.resolve(this.data);
+        // }
+        return this.http.get(this.keywordsUrl + keyword)
+            .map((res: Response) => res.json());
     }
 
 }

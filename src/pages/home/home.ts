@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AddTrend} from '../add-trend/add-trend';
-import { TrendsProvider } from '../../providers/trends';
+import { AddKeyword} from '../add-keyword/add-keyword';
+import { KeywordsProvider } from '../../providers/keywords';
 
 @Component({
     selector: 'page-home',
@@ -8,43 +8,43 @@ import { TrendsProvider } from '../../providers/trends';
 })
 export class Home {
 
-    trends: any;
+    keywords: any;
 
     constructor() {
 
     }
 
     ionViewDidLoad(){
-        // this.trendsProvider.getTrends().then((data) => {
-        //     this.trends = data;
-        //     console.log(this.trends);
+        // this.keywordsProvider.getKeywords().then((data) => {
+        //     this.keywords = data;
+        //     console.log(this.keywords);
         // });
     }
 
-    addTrend(){
-        // console.log("add trend");
-        // let modal = this.modalCtrl.create(AddTrend);
+    addKeyword(){
+        // console.log("add keyword");
+        // let modal = this.modalCtrl.create(AddKeyword);
         //
-        // modal.onDidDismiss(trend => {
-        //     if (trend) {
-        //         this.trends.push(trend);
-        //         this.trendsProvider.createTrend(trend);
+        // modal.onDidDismiss(keyword => {
+        //     if (keyword) {
+        //         this.keywords.push(keyword);
+        //         this.keywordsProvider.createKeyword(keyword);
         //     }
         // });
         //
         // modal.present();
     }
 
-    deleteTrend(trend){
+    deleteKeyword(keyword){
         //Remove locally
-        // let index = this.trends.indexOf(trend);
+        // let index = this.keywords.indexOf(keyword);
         //
         // if (index > -1) {
-        //     this.trends.splice(index, 1);
+        //     this.keywords.splice(index, 1);
         // }
         //
         //Remove from database
-        // this.trendsProvider.deleteTrend(trend._id);
+        // this.keywordsProvider.deleteKeyword(keyword._id);
     }
 
 }

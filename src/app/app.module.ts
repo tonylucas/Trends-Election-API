@@ -7,24 +7,25 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { Home } from '../pages/home/home';
-import { AddTrend } from '../pages/add-trend/add-trend';
-import { ListTrends } from '../pages/list-trends/list-trends';
+import { AddKeyword } from '../pages/add-keyword/add-keyword';
+import { ListKeywords } from '../pages/list-keywords/list-keywords';
+import { KeywordsProvider } from '../providers/keywords';
 import { TrendsProvider } from '../providers/trends';
 
 const appRoutes: Routes = [
     // {
-    //     path: 'trend/:id',
-    //     component: TrendDetailComponent
+    //     path: 'keyword/:id',
+    //     component: KeywordDetailComponent
     // },
     {
-        path: 'trends',
-        component: ListTrends
+        path: 'keywords',
+        component: ListKeywords
     }, {
-        path: 'trends/add',
-        component: AddTrend
+        path: 'keywords/add',
+        component: AddKeyword
     }, {
         path: '',
-        redirectTo: '/trends',
+        redirectTo: '/keywords',
         pathMatch: 'full'
     },
     // {
@@ -36,8 +37,8 @@ const appRoutes: Routes = [
 @NgModule({
     declarations: [
         AppComponent,
-        AddTrend,
-        ListTrends
+        AddKeyword,
+        ListKeywords
     ],
     imports: [
         RouterModule.forRoot(appRoutes),
@@ -47,10 +48,11 @@ const appRoutes: Routes = [
     ],
     entryComponents: [
         AppComponent,
-        AddTrend,
-        ListTrends
+        AddKeyword,
+        ListKeywords
     ],
     providers: [
+        KeywordsProvider,
         TrendsProvider
     ],
     bootstrap: [AppComponent]

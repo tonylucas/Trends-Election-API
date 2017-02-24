@@ -1,0 +1,25 @@
+<div class="row column">
+    <h1>
+        Keywords
+    </h1>
+    <a href="/keywords/add" class="button success">Ajouter</a>
+    <button class="button" (click)="updateKeywords()">
+        Update keywords
+    </button>
+</div>
+
+
+<div class="row">
+    <div class="columns medium-4 end" *ngFor="let keyword of keywords">
+        <div class="card-divider">
+            {{keyword.name}}
+        </div>
+        <div class="card-section">
+            <p *ngIf="keyword.values">{{keyword.values}}</p>
+            <p *ngIf="!keyword.values">Aucune donée</p>
+            <button class="button alert tiny" (click)="delete(keyword._id)">
+                Supprimer
+            </button>
+        </div>
+    </div>
+</div>
