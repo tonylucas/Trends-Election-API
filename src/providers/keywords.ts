@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers} from '@angular/http';
+import { Http, Headers, Response} from '@angular/http';
 import 'rxjs/add/operator/map';
+import { Keyword } from '../model/keyword';
+import {Observable} from 'rxjs/Rx';
 
 /*
   Generated class for the Keywords provider.
@@ -21,20 +23,8 @@ export class KeywordsProvider {
 
     // Get all posts from the API
     getKeywords() {
-        // if (this.data) {
-
-        console.log();
-        //     return Promise.resolve(this.data);
-        // }
-
-        return new Promise(resolve => {
-            this.http.get(this.keywordsUrl)
-            .map(res => res.json())
-                .subscribe(data => {
-                    this.data = data;
-            resolve(this.data);
-                });
-        });
+        return this.http.get(this.keywordsUrl)
+        .map((res: Response) => res.json());
     }
 
     createKeyword(keyword) {

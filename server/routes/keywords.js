@@ -2,12 +2,12 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 
-// Models
-var Keyword = mongoose.model('Keyword', {
-    name: String,
-    values: String,
-    type: String
+// Model
+var keywordSchema = new mongoose.Schema({
+    name: String
 });
+
+var Keyword = mongoose.model('Keyword', keywordSchema);
 
 // Routes
 // Get keywords
@@ -45,10 +45,7 @@ router.get('/:keyword_id', function(req, res) {
 // Create keyword and send back all keywords after creation
 router.post('/', function(req, res) {
     Keyword.create({
-        name: req.body.name,
-        values: req.body.values,
-        type: req.body.type,
-        done: false
+        name: req.body.name
     }, function(err, keyword) {
         if (err)
             res.send(err);

@@ -9,7 +9,9 @@ var cors = require('cors');
 
 var index = require('./routes/index');
 var trends = require('./routes/trends');
+var googleTrends = require('./routes/google-trends');
 var keywords = require('./routes/keywords');
+var matchs = require('./routes/matchs');
 
 var app = express();
 
@@ -39,7 +41,9 @@ app.use(cors({
 
 app.use('/', index);
 app.use('/trends', trends);
+app.use('/google-trends', googleTrends);
 app.use('/keywords', keywords);
+app.use('/matchs', matchs);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

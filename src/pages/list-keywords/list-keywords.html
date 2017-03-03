@@ -12,14 +12,78 @@
 <div class="row">
     <div class="columns medium-4 end" *ngFor="let keyword of keywords">
         <div class="card-divider">
-            {{keyword.name}}
+            <strong>{{keyword.name}}</strong>
         </div>
         <div class="card-section">
-            <p *ngIf="keyword.values">{{keyword.values}}</p>
-            <p *ngIf="!keyword.values">Aucune donée</p>
-            <button class="button alert tiny" (click)="delete(keyword._id)">
+            <p *ngIf="keyword.createdAt">
+                Updated at {{keyword.createdAt | date: 'dd/MM/yyyy H:mm:ss'}}
+            </p>
+            <p *ngIf="!keyword.createdAt">Aucune donée</p>
+            <button class="button alert tiny" (click)="deleteKeyword(keyword._id)">
                 Supprimer
             </button>
         </div>
     </div>
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="columns medium-8">
+        <div class="row column">
+            <h1>
+                Matchs
+            </h1>
+            <button class="button" (click)="updateMatchs()">
+                Update matchs
+            </button>
+        </div>
+        <div class="row">
+            <div class="columns medium-6 end" *ngFor="let match of matchs">
+                <div class="card-divider bold">
+                    <strong>{{match.name}}</strong>
+                </div>
+                <div class="card-section">
+                    <p *ngIf="match.createdAt">{{match.values}}</p>
+                    <p *ngIf="!match.createdAt">Aucune donée</p>
+                    <p>Updated at {{match.createdAt | date: 'dd/MM/yyyy H:mm'}}</p>
+                    <span *ngFor="let keyword of match.keywords; let last = last">
+                        {{keyword}} <span *ngIf="!last">|</span>
+                    </span>
+                    <button class="button alert tiny" (click)="deleteMatch(match._id)">
+                        Supprimer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="columns medium-4">
+        <div class="row column">
+            <h3>
+                Create match
+            </h3>
+        </div>
+
+
+        <div class="row column">
+            <div class="">
+                <label>Name</label>
+                <input type="text" [(ngModel)]="newMatch.name">
+                <label>
+                    keywords
+                </label>
+                <select [(ngModel)]="newMatch.keywords" multiple>
+                    <option *ngFor="let keyword of keywords" [(value)]="keyword.name">{{keyword.name}}</option>
+                </select>
+                <button class="button success" (click)="createMatch()">
+                    Créer
+                </button>
+            </div>
+        </div>
+
+        <div class="row column">
+            <a href=""></a>
+        </div>
+    </div>
+
 </div>

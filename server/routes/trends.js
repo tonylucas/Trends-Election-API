@@ -3,54 +3,109 @@ var router = express.Router();
 var googleTrends = require('google-trends-api');
 var mongoose = require('mongoose');
 
-
-router.get('/', function(req, res, next) {
-    res.send('Parameter is missing.');
+// Model
+var trendSchema = new mongoose.Schema({
+    parentType: String,
+    parentName: String,
+    parentId: String,
+    values: String,
+    period: String,
+}, {
+    timestamps: true
 });
+var Trend = mongoose.model('Trend', trendSchema);
 
-/* GET historical trend data to a provided trend or an array of trends. */
-router.get('/:keyword', function(req, res, next) {
-    var today = new Date();
-    var threeMonthsAgo = new Date(today.setMonth(today.getMonth() - 3));
+// Routes
 
-    var options = {
-        keyword: req.params.keyword,
-        startTime: threeMonthsAgo, // defaults new Date('2004-01-01')
-        // endTime: new Date(Date.now()),
-        geo: 'FR',
-        hl: 'fr' // Preferred language code for results
-    }
-
-    googleTrends.interestOverTime(options, function(err, results) {
-        if (err) {
-            console.log('oh no error!', err);
-            res.send(err);
-        } else {
-            var results = JSON.parse(results).default;
-            results.timelineData.forEach(function(value) {
-                delete value.formattedValue
-                delete value.formattedAxisTime
-                var val = value.value[0];
-                delete value;
-                value.value = val;
-            });
-            res.json(results.timelineData);
-        }
+// Get local trends
+router.get('/', function(req, res) {
+    // Use mongoose to get all keywords in the database
+    Trend.find(function(err, trends) {
+        // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+        if (err)
+            res.send(err)
+        else
+            res.json(trends); // return all keywords in JSON format
     });
 });
 
-router.get('/url/:trend', function(req, res, next) {
-    // res.send("config :")
-    options.trends = req.params.trend,
-        // res.send(options);
+// Get local trend values from id
+router.get('/:trend_id', function(req, res) {
+    // Use mongoose to get the keyword in the database
+    Trend.findOne({
+        '_id': req.params.trend_id
+    }, function(err, trend) {
+        // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+        if (err)
+            res.send(err)
 
-        googleTrends.getUrlTrendData(options)
-        .then(function(results) {
-            res.send(results[0]);
-        })
-        .catch(function(err) {
+        res.json(trend); // Return the trend values in JSON format
+    });
+});
+
+// Get local trend values from keyword/match id
+router.get('/parent/:parent_id', function(req, res) {
+    // Use mongoose to get the keyword in the database
+    Trend.findOne({
+        parentId: req.params.parent_id
+    }, function(err, trend) {
+        // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+        if (err)
+            res.send(err)
+
+        res.json(trend); // Return the trend values in JSON format
+    });
+});
+
+
+// Create keyword and send back row id after creation
+router.post('/', function(req, res) {
+    Trend.create({
+        parentType: req.body.parentType,
+        parentName: req.body.parentName,
+        parentId: req.body.parentId,
+        values: req.body.values,
+        period: "3-month"
+    }, function(err, trend) {
+        if (err)
             res.send(err);
-        });
+
+        res.send(trend);
+    });
+});
+
+// Delete a trend
+router.delete('/:trend_id', function(req, res) {
+    Trend.remove({
+        _id: req.params.trend_id
+    }, function(err, trend) {
+        if (err)
+            res.send(err);
+
+        res.send("Trend supprimé : " + trend);
+    });
+});
+
+router.get('/parentid/:parent_id', function(req, res) {
+    Trend.find({
+        parentId: req.params.parent_id
+    }, function(err, trend) {
+        if (err)
+            res.send(err);
+
+        res.json(trend);
+    });
+});
+
+router.delete('/parentid/:parent_id', function(req, res) {
+    Trend.remove({
+        parentId: req.params.parent_id
+    }, function(err, trend) {
+        if (err)
+            res.send(err);
+
+        res.send("Trend(s) supprimé(s) : " + trend);
+    });
 });
 
 module.exports = router;
