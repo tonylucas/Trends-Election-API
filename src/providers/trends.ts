@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response} from '@angular/http';
+import { AppComponent } from '../app/app.component';
 import { Trend } from '../model/trend';
 import { Keyword } from '../model/keyword';
 import { Parent } from '../model/parent';
@@ -16,8 +17,8 @@ import {Observable} from 'rxjs/Rx';
 export class TrendsProvider {
 
     data: any;
-    googleTrendsUrl = "http://localhost:3000/google-trends/";
-    trendsUrl = "http://localhost:3000/trends/";
+    private googleTrendsUrl = AppComponent.API_ENDPOINT + 'google-trends/';
+    private trendsUrl = AppComponent.API_ENDPOINT + 'trends/';
 
     constructor(public http: Http) {
         this.data = null;

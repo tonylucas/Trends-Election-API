@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response} from '@angular/http';
 import 'rxjs/add/operator/map';
+import { AppComponent } from '../app/app.component';
 import { Match } from '../model/match';
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 
 /*
   Generated class for the Matchs provider.
@@ -15,7 +16,7 @@ export class MatchsProvider {
 
     data: any;
 
-    private matchsUrl = 'http://localhost:3000/matchs/';
+    private matchsUrl = AppComponent.API_ENDPOINT + 'matchs/';
 
     constructor(public http: Http) {
         this.data = null;

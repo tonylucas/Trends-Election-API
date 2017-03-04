@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response} from '@angular/http';
 import 'rxjs/add/operator/map';
+import { AppComponent } from '../app/app.component';
 import { Keyword } from '../model/keyword';
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 
 /*
   Generated class for the Keywords provider.
@@ -15,7 +16,8 @@ export class KeywordsProvider {
 
     data: any;
 
-    private keywordsUrl = 'http://localhost:3000/keywords/';
+    // private keywordsUrl = 'http://localhost:3000/keywords/';
+    private keywordsUrl = AppComponent.API_ENDPOINT + 'keywords/';
 
     constructor(public http: Http) {
         this.data = null;
