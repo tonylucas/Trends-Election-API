@@ -6,7 +6,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 
 import { AppComponent } from './app.component';
-import { Home } from '../pages/home/home';
 import { AddKeyword } from '../pages/add-keyword/add-keyword';
 import { ListKeywords } from '../pages/list-keywords/list-keywords';
 import { KeywordsProvider } from '../providers/keywords';
@@ -14,10 +13,6 @@ import { TrendsProvider } from '../providers/trends';
 import { MatchsProvider } from '../providers/matchs';
 
 const appRoutes: Routes = [
-    // {
-    //     path: 'keyword/:id',
-    //     component: KeywordDetailComponent
-    // },
     {
         path: 'keywords',
         component: ListKeywords
