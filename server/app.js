@@ -38,7 +38,7 @@ app.use(cors({
     "origin": [
         "http://localhost:4200",
         "http://178.62.124.181:8080",
-        "http://tony-lucas:8080"
+        "http://tony-lucas.com:8080"
     ],
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE"
 }));
