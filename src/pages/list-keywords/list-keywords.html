@@ -46,7 +46,7 @@
                 <div class="card-section">
                     <p *ngIf="match.createdAt">{{match.values}}</p>
                     <p *ngIf="!match.createdAt">Aucune donée</p>
-                    <p>Updated at {{match.createdAt | date: 'dd/MM/yyyy H:mm'}}</p>
+                    <p>Updated at {{match.createdAt | date: 'dd/MM/yyyy H:mm:ss'}}</p>
                     <span *ngFor="let keyword of match.keywords; let last = last">
                         {{keyword}} <span *ngIf="!last">|</span>
                     </span>

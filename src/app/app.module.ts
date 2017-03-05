@@ -14,14 +14,14 @@ import { MatchsProvider } from '../providers/matchs';
 
 const appRoutes: Routes = [
     {
-        path: 'keywords',
+        path: '',
         component: ListKeywords
     }, {
         path: 'keywords/add',
         component: AddKeyword
     }, {
-        path: '',
-        redirectTo: '/keywords',
+        path: '**',
+        redirectTo: '',
         pathMatch: 'full'
     },
     // {

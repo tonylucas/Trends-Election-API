@@ -105,7 +105,7 @@ export class ListKeywords implements OnInit {
             this.trendsProvider.deleteTrendsFromParentId(match._id)
                 .subscribe((res) => {
                     if (this.matchs.length == index + 1) {
-                        this.trendsProvider.updateTrendsValues(this.matchs);
+                        this.trendsProvider.updateTrendsValuesMulti(this.matchs);
                     }
                 });
         });

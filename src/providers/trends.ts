@@ -56,7 +56,7 @@ export class TrendsProvider {
         .map((res: Response) => res.json());
     }
 
-    // Update trends values for current keywords
+    // Update trends values for keywords
     updateTrendsValues(keywords): void {
         for (let keyword of keywords) {
             this.getGoogleTrend(keyword.name)
@@ -76,6 +76,7 @@ export class TrendsProvider {
         }
     }
 
+    // Update trends values for matchs (different Google Trends route)
     updateTrendsValuesMulti(matchs): void {
         console.log("matchs");
         console.log(matchs);
