@@ -37,9 +37,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({
     "origin": [
         "http://localhost:4200",
-        "http://178.62.124.181:8080",
-        "http://tony-lucas.com:8080",
-        "http://app.tony-lucas.com"
+        "https://178.62.124.181:8080",
+        "https://tony-lucas.com:8080",
+        "https://app.tony-lucas.com"
     ],
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE"
 }));
