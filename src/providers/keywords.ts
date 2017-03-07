@@ -16,7 +16,6 @@ export class KeywordsProvider {
 
     data: any;
 
-    // private keywordsUrl = 'http://localhost:3000/keywords/';
     private keywordsUrl = AppComponent.API_ENDPOINT + 'keywords/';
 
     constructor(public http: Http) {

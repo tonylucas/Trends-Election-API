@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { environment } from '../environments/environment';
+import { AngularFire } from 'angularfire2';
+import { Router } from '@angular/router'
+
 
 @Component({
     selector: 'app-root',
@@ -7,6 +10,14 @@ import { environment } from '../environments/environment';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    title = 'API server works!';
     public static API_ENDPOINT = environment.apiEndpoint;
+    
+    constructor(public af: AngularFire, private router: Router) {
+        this.af.auth.subscribe(auth => {
+            if(!auth) {
+                this.router.navigate(['/login']);
+            }
+        });
+
+    }
 }

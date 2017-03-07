@@ -5,6 +5,8 @@ import { TrendsProvider } from '../../providers/trends';
 import { MatchsProvider } from '../../providers/matchs';
 import { Router } from '@angular/router'
 import { Observable } from 'rxjs/Rx';
+import { AngularFire } from 'angularfire2';
+
 import { Trend } from '../../model/trend';
 import { Keyword } from '../../model/keyword';
 import { Parent } from '../../model/parent';
@@ -28,7 +30,9 @@ export class ListKeywords implements OnInit {
         public keywordsProvider: KeywordsProvider,
         public trendsProvider: TrendsProvider,
         public matchsProvider: MatchsProvider,
-        private router: Router) {
+        private router: Router,
+        public af: AngularFire) {
+
     }
 
     ngOnInit() {
@@ -136,6 +140,11 @@ export class ListKeywords implements OnInit {
             .subscribe((match) => {
                 console.log(match);
             });
+    }
+
+    logout() {
+        this.af.auth.logout();
+        this.router.navigate(['/']);
     }
 
 }
