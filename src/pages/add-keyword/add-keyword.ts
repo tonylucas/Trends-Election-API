@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { KeywordsProvider } from '../../providers/keywords';
-import {Router} from '@angular/router'
+import { Router } from '@angular/router'
+import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
+import { Keyword } from '../../model/keyword';
 
 
 @Component({
@@ -9,22 +11,33 @@ import {Router} from '@angular/router'
 })
 export class AddKeyword {
 
-    name: any;
-    values: any;
-    type: any;
+    selectedKeyword: Object;
+    googleGeoCode: string = "http://localhost:3000/google-autocomplete/:keyword";
 
     constructor(public keywordsProvider: KeywordsProvider, private router: Router) {
+        this.selectedKeyword = {
+            title: "",
+            mid: "",
+            type: ""
+        };
+    }
 
+
+    autocompleteSelected(event): void {
+        this.selectedKeyword = event;
+        console.log(this.selectedKeyword);
+    }
+
+    formatAutocomplete(data: any): string {
+        console.log(data);
+        let html: string = "";
+        html += data["title"] ? `<b>${data["title"]}</b>, ` : "";
+        html += data["type"] ? `<span>${data["type"]}</span>` : data;
+        return html;
     }
 
     save(): void {
-        let keyword = {
-            name: this.name,
-            values: "",
-            type: "",
-        };
-
-        this.keywordsProvider.createKeyword(keyword).subscribe((res) => {
+        this.keywordsProvider.createKeyword(this.selectedKeyword).subscribe((res) => {
             this.router.navigate(['/keywords']);
         });
 

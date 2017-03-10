@@ -12,6 +12,8 @@ import { ListKeywords } from '../pages/list-keywords/list-keywords';
 import { KeywordsProvider } from '../providers/keywords';
 import { TrendsProvider } from '../providers/trends';
 import { MatchsProvider } from '../providers/matchs';
+import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
+
 
 const myFirebaseConfig = {
     apiKey: "AIzaSyAJqeG7TM_SUQ2N4n8L2zDTDdyufW7bo_w",
@@ -55,7 +57,8 @@ const appRoutes: Routes = [
         BrowserModule,
         FormsModule,
         HttpModule,
-        AngularFireModule.initializeApp(myFirebaseConfig, myFirebaseAuthConfig)
+        AngularFireModule.initializeApp(myFirebaseConfig, myFirebaseAuthConfig),
+        Ng2AutoCompleteModule
     ],
     entryComponents: [
         AppComponent,

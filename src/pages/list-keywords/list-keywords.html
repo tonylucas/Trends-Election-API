@@ -10,16 +10,23 @@
 </div>
 
 
-<div class="row">
+<div class="row" data-equalizer data-equalize-on-stack="false">
     <div class="columns medium-4 end" *ngFor="let keyword of keywords">
-        <div class="card-divider">
-            <strong>{{keyword.name}}</strong>
+        <div class="card-divider" data-equalizer-watch>
+            <strong>{{keyword.title}}</strong>
+            <br>
+            <small>{{keyword.type}}</small>
+            <br>
+            <br>
+            <div class="light mid">
+                <small><i>{{keyword.mid}}</i></small>
+            </div>
         </div>
         <div class="card-section">
             <p *ngIf="keyword.createdAt">
                 Updated at {{keyword.createdAt | date: 'dd/MM/yyyy H:mm:ss'}}
             </p>
-            <p *ngIf="!keyword.createdAt">Aucune donée</p>
+            <p *ngIf="!keyword.createdAt">Aucune donnée</p>
             <button class="button alert tiny" (click)="deleteKeyword(keyword._id)">
                 Supprimer
             </button>
@@ -46,7 +53,7 @@
                 </div>
                 <div class="card-section">
                     <p *ngIf="match.createdAt">{{match.values}}</p>
-                    <p *ngIf="!match.createdAt">Aucune donée</p>
+                    <p *ngIf="!match.createdAt">Aucune donnée</p>
                     <p>Updated at {{match.createdAt | date: 'dd/MM/yyyy H:mm:ss'}}</p>
                     <span *ngFor="let keyword of match.keywords; let last = last">
                         {{keyword}} <span *ngIf="!last">|</span>
