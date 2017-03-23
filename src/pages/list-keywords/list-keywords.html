@@ -11,7 +11,7 @@
 
 
 <div class="row" data-equalizer data-equalize-on-stack="false">
-    <div class="columns medium-4 end" *ngFor="let keyword of keywords">
+    <div class="columns small-6 medium-4 end" *ngFor="let keyword of keywords">
         <div class="card-divider" data-equalizer-watch>
             <strong>{{keyword.title}}</strong>
             <br>
@@ -72,7 +72,6 @@
             </h3>
         </div>
 
-
         <div class="row column">
             <div class="">
                 <label>Name</label>
@@ -81,7 +80,7 @@
                     keywords
                 </label>
                 <select [(ngModel)]="newMatch.keywords" multiple>
-                    <option *ngFor="let keyword of keywords" [(value)]="keyword.name">{{keyword.name}}</option>
+                    <option *ngFor="let keyword of keywords" [(value)]="keyword.mid">{{keyword.title}}</option>
                 </select>
                 <button class="button success" (click)="createMatch()">
                     Créer

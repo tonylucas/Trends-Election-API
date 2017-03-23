@@ -41,18 +41,18 @@ export class TrendsProvider {
 
     // Get trend values for one keyword/match
     getTrendFromParent(parentId): Observable<Parent> {
-        return this.http.get(this.trendsUrl + '/parent/' + parentId)
+        return this.http.get(this.trendsUrl + 'parentid/' + parentId)
             .map((res: Response) => res.json());
     }
 
     // Delete trends from parent ID (keyword or match)
     deleteTrendsFromParentId(parentId): Observable<Response> {
-        return this.http.delete(this.trendsUrl + '/parentid/' + parentId);
+        return this.http.delete(this.trendsUrl + 'parentid/' + parentId);
     }
 
     // Get trends from parent ID (keyword or match)
     getTrendsFromParentId(parentId): Observable<Trend[]> {
-        return this.http.get(this.trendsUrl + '/parentid/' + parentId)
+        return this.http.get(this.trendsUrl + 'parentid/' + parentId)
         .map((res: Response) => res.json());
     }
 
@@ -63,14 +63,14 @@ export class TrendsProvider {
                 .subscribe((trendValues) => {
                     this.http.post(this.trendsUrl, {
                         parentType: "keyword",
-                        parentName: keyword.name,
+                        parentName: keyword.title,
                         parentId: keyword._id,
                         values: JSON.stringify(trendValues)
                     })
                         .map((res: Response) => res.json())
                         .subscribe((trend) => {
                             console.log(trend);
-                            console.log("Keyword " + trend.parentName + " updated !");
+                            console.log('Keyword "' + trend.parentName + '" updated !');
                         });
                 });
         }
