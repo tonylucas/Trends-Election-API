@@ -14,6 +14,8 @@ const trends = require('./controllers/trends');
 const googleTrends = require('./controllers/google-trends');
 const googleAutocomplete = require('./controllers/google-autocomplete');
 
+const cron = require('./cron');
+
 const app = express();
 
 

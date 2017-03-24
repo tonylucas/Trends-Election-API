@@ -1,6 +1,6 @@
-const express = require('express');
-const router = express.Router();
-const Keyword = require('../models/keyword')
+const express = require('express'),
+    router = express.Router(),
+    Keyword = require('../models/keyword');
 
 // Routes
 // Get keywords

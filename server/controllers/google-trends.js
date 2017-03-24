@@ -1,93 +1,33 @@
-var express = require('express');
-var router = express.Router();
-var googleTrends = require('google-trends-api');
-var mongoose = require('mongoose');
+const express = require('express'),
+    router = express.Router(),
+    GoogleTrends = require('../models/google-trends');
 
 router.get('/', function(req, res, next) {
     res.send('Parameter is missing.');
 });
 
-/* GET historical trend data to a provided trend or an array of trends. */
+// GET historical trend data to a provided trend or an array of trends.
 router.get('/:keyword', function(req, res, next) {
-    var today = new Date();
-    var threeMonthsAgo = new Date(today.setMonth(today.getMonth() - 3));
-
-    var options = {
-        keyword: req.params.keyword,
-        startTime: threeMonthsAgo, // defaults new Date('2004-01-01')
-        // endTime: new Date(Date.now()),
-        geo: 'FR',
-        hl: 'fr' // Preferred language code for results
-    }
-
-    googleTrends.interestOverTime(options, function(err, results) {
-        if (err) {
-            console.log('oh no error!', err);
-            res.send(err);
-        } else {
-            var results = JSON.parse(results).default;
-            results.timelineData.forEach(function(value) {
-                delete value.formattedValue
-                delete value.formattedAxisTime
-                var val = value.value[0];
-                delete value;
-                value.value = val;
-            });
-
-            res.json(results.timelineData);
-        }
-    });
+    GoogleTrends.getByKeyword(req.params.keyword,
+        function(data) {
+            res.json(data);
+        },
+        function(error) {
+            console.log('Oh no error!', error);
+            res.send(error);
+        });
 });
 
-// Get Google trend with post params
+// Get Google trend with post params for multiple keywords.
 router.post('/', function(req, res, next) {
-    var today = new Date();
-    var threeMonthsAgo = new Date(today.setMonth(today.getMonth() - 3));
-    var keywords = req.body.keywords;
-
-    var options = {
-        keyword: keywords,
-        startTime: threeMonthsAgo, // defaults new Date('2004-01-01')
-        // endTime: new Date(Date.now()),
-        geo: 'FR',
-        hl: 'fr' // Preferred language code for results
-    }
-
-    console.log(options);
-
-    googleTrends.interestOverTime(options, function(err, results) {
-        if (err) {
-            console.log('oh no error!', err);
-            res.send(err);
-        } else {
-            console.log('interestOverTime ');
-            res.json(JSON.parse(results));
-        }
-    });
-});
-
-
-var today = new Date();
-var threeMonthsAgo = new Date(today.setMonth(today.getMonth() - 3));
-
-var options = {
-    keyword: ['tony', 'lucas'],
-    startTime: threeMonthsAgo, // defaults new Date('2004-01-01')
-    // endTime: new Date(Date.now()),
-    geo: 'FR',
-    hl: 'fr' // Preferred language code for results
-}
-
-console.log(options);
-
-googleTrends.interestOverTime(options, function(err, results) {
-    if (err) {
-        console.log('oh no error!', err);
-        console.log(err);
-    } else {
-        console.log('interestOverTime OK');
-        // res.json(JSON.parse(results));
-    }
+    GoogleTrends.getByKeywords(req.body.keywords,
+        function(data) {
+            res.json(data);
+        },
+        function(error) {
+            console.log('Oh no error!', error);
+            res.send(error);
+        });
 });
 
 module.exports = router;

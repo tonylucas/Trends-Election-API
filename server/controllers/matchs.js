@@ -1,6 +1,6 @@
-const express = require('express');
-const router = express.Router();
-const Match = require('../models/match');
+const express = require('express'),
+    router = express.Router(),
+    Match = require('../models/match');
 
 // Routes
 // Get all matchs

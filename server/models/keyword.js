@@ -10,8 +10,6 @@ const keywordSchema = new mongoose.Schema({
 const Keyword = mongoose.model('Keyword', keywordSchema);
 
 exports.get = (callback) => {
-    console.log("Fetching keywords");
-
     // Use mongoose to get all keywords in the database
     Keyword.find((err, keywords) => {
         // if there is an error retrieving, send the error. nothing after res.send(err) will execute

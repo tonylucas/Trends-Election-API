@@ -1,6 +1,5 @@
 const express = require('express'),
-    router = express.Router(),
-    Match = require('../models/match');
+    router = express.Router();
 
 router.use('/keywords', require('./keywords'));
 router.use('/trends', require('./trends'));

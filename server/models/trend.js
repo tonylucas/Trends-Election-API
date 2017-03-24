@@ -67,13 +67,14 @@ exports.update = (id, params, callback) => {
 };
 
 // Delete a trend
-exports.delete = (id, callback) => {
+exports.delete = (id, callback, callbackErr) => {
     Trend.remove({
         _id: id
     }, (err, trend) => {
         if (err)
-            return callback(err);
-        callback(trend)
+            return callbackErr(err);
+
+        return callback(trend)
     });
 };
 
