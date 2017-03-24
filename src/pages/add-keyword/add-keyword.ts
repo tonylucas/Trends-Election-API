@@ -12,15 +12,11 @@ import { AppComponent } from '../../app/app.component';
 })
 export class AddKeyword {
 
-    private selectedKeyword: Object;
-    private googleGeoCode: string = AppComponent.API_ENDPOINT + 'google-autocomplete/:keyword';
+    public selectedKeyword: Keyword;
+    public googleGeoCode: string = AppComponent.API_ENDPOINT + 'google-autocomplete/:keyword';
 
     constructor(public keywordsProvider: KeywordsProvider, private router: Router) {
-        this.selectedKeyword = {
-            title: "",
-            mid: "",
-            type: ""
-        };
+        this.selectedKeyword = new Keyword();
     }
 
 
@@ -38,6 +34,7 @@ export class AddKeyword {
     }
 
     save(): void {
+        console.log(this.selectedKeyword);
         this.keywordsProvider.createKeyword(this.selectedKeyword).subscribe((res) => {
             this.router.navigate(['/keywords']);
         });

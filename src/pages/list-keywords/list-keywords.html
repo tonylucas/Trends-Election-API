@@ -82,7 +82,7 @@
                 <select [(ngModel)]="newMatch.keywords" multiple>
                     <option *ngFor="let keyword of keywords" [(value)]="keyword.mid">{{keyword.title}}</option>
                 </select>
-                <button class="button success" (click)="createMatch()">
+                <button class="button success" (click)="createMatch(newMatch.keywords)">
                     Créer
                 </button>
             </div>

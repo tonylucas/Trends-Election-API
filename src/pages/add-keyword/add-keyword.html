@@ -6,32 +6,21 @@
 
 
 <div class="row column">
-    <input type="text"
-      ng2-auto-complete
-      [(ngModel)]="selectedKeyword.title"
-      placeholder="Enter keyword"
-      [source]="googleGeoCode"
-      [list-formatter]="formatAutocomplete"
-      path-to-data="default.topics"
-      display-property-name="title"
-      min-chars="2"
-      (valueChanged)="autocompleteSelected($event)"
-      >
-</div>
-
-
-<div class="row column">
-    <div class="">
-        <label>
-            Mot-clé
-            <input type="text" [(ngModel)]="name">
-        </label>
-        <button class="button success" (click)="save()">
-            Ajouter
-        </button>
-    </div>
-</div>
-
-<div class="row column">
-    <a href=""></a>
+    <label>
+        Mot-clé
+        <input type="text"
+          ng2-auto-complete
+          [(ngModel)]="selectedKeyword.title"
+          placeholder="Enter keyword"
+          [source]="googleGeoCode"
+          [list-formatter]="formatAutocomplete"
+          path-to-data="default.topics"
+          display-property-name="title"
+          min-chars="2"
+          (valueChanged)="autocompleteSelected($event)"
+          >
+    </label>
+    <button class="button success" (click)="save()">
+        Ajouter
+    </button>
 </div>
