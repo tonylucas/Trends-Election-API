@@ -17,16 +17,16 @@ const express = require('express'),
 console.log("\n\n\n\n\n------");
 
 schedule.scheduleJob('0 0 */2 * * *', () => {
-    console.log(new Date());
     updateAll();
 });
 
 
 let logFile = 'logs.txt';
-fs.appendFile(logFile, `\n--------------------\n${new Date()} \n`, () => {});
 
 function updateAll() {
-    console.log("updateAll");
+
+    fs.appendFile(logFile, `\n--------------------\n${new Date()} \n`, () => {});
+
     // Getting old trends to be replaced
     let oldTrends = [];
 
