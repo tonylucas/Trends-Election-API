@@ -37,16 +37,18 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Use it before all route definitions
-app.use(cors({
-    origin: [
-        "http://localhost:4200",
-        "https://178.62.124.181:8080",
-        "https://tony-lucas.com:8080",
-        "https://app.tony-lucas.com",
-        "http://app.tony-lucas.com"
-    ],
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
-}));
+// app.use(cors({
+//     origin: [
+//         "http://localhost:4200",
+//         "http://localhost:4200",
+//         "https://178.62.124.181:8080",
+//         "https://tony-lucas.com:8080",
+//         "https://app.tony-lucas.com",
+//         "http://app.tony-lucas.com"
+//     ],
+//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
+// }));
+app.use(cors());
 
 app.use(require('./controllers'));
 
