@@ -42,8 +42,7 @@ app.use(cors({
         "http://localhost:4200",
         "https://178.62.124.181:8080",
         "https://tony-lucas.com:8080",
-        "https://app.tony-lucas.com",
-        "http://app.tony-lucas.com"
+        "https://app.tony-lucas.com"
     ],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
 }));
