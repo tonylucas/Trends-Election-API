@@ -1,13 +1,29 @@
 const express = require('express'),
     router = express.Router(),
-    Match = require('../models/match');
+    Match = require('../models/match'),
+    Keywords = require('../models/keyword');
 
 // Routes
 // Get all matchs
 router.get('/', (req, res) => {
     console.log("Fetching matchs");
-    Match.get(function(matchs) {
-        res.json(matchs);
+    Match.get(function(result) {
+        let matchs = result;
+
+        for (match of matchs) {
+            let keywords = match.keywords;
+
+            keywords.forEach((keyword, index) => {
+                Keywords.getKeywordByMid(keyword, function(data) {
+                    keywords[index] = data;
+
+                    if (keywords.length == index + 1) {
+                        res.json(matchs);
+                    }
+                });
+
+            });
+        } 
     });
 });
 

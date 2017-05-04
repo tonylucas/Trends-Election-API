@@ -57,6 +57,19 @@ exports.update = (id, datas, callback) => {
 
 };
 
+// Get trend name from MID
+exports.getKeywordByMid = (mid, callback) => {
+    Keyword.findOne({
+        'mid': mid
+    }, (err, keyword) => {
+        // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+        if (err)
+            return callback(err)
+
+        callback(keyword); // Return the keyword in JSON format
+    });
+};
+
 // Delete a keyword
 exports.delete = (id, callback) => {
     Keyword.remove({
