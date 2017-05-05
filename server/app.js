@@ -39,6 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Use it before all route definitions
 app.use(cors({
     origin: [
+        "http://localhost:8100",
         "http://localhost:4200",
         "https://178.62.124.181:8080",
         "https://tony-lucas.com:8080",
