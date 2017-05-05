@@ -23,7 +23,9 @@ router.get('/', (req, res) => {
                     count++;
                     keywords[index] = data;
                     if (count == keywords.length && (j + 1 == matchs.length)) {
-                        res.json(matchs);
+			setTimeout(function(){
+                            res.json(matchs);
+                        });
                     }
                 });
             });
