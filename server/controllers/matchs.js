@@ -7,23 +7,28 @@ const express = require('express'),
 // Get all matchs
 router.get('/', (req, res) => {
     console.log("Fetching matchs");
+
     Match.get(function(result) {
         let matchs = result;
+        console.log('length', matchs.length);
 
-        for (match of matchs) {
-            let keywords = match.keywords;
+        for (let j = 0; j < matchs.length; j++) {
+        // for (const j in matchs) {
+
+            let keywords = matchs[j].keywords;
+            let count = 0;
 
             keywords.forEach((keyword, index) => {
                 Keywords.getKeywordByMid(keyword, function(data) {
+                    count++;
                     keywords[index] = data;
-
-                    if (keywords.length == index + 1) {
+                    if (count == keywords.length && (j + 1 == matchs.length)) {
                         res.json(matchs);
                     }
                 });
-
             });
-        } 
+
+        }
     });
 });
 
