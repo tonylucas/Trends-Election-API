@@ -78,10 +78,10 @@ export class TrendsProvider {
 
     // Update trends values for matchs (different Google Trends route)
     updateTrendsValuesMulti(matchs): void {
-        console.log("matchs");
-        console.log(matchs);
+        console.log("matchs", matchs);
+
         for (let match of matchs) {
-            this.getGoogleTrend(match.keywords)
+            this.getGoogleTrend(match.keywords.map(k => k.title))
                 .subscribe((trendValues) => {
                     console.log(trendValues);
                     this.http.post(this.trendsUrl, {
