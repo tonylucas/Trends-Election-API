@@ -40,36 +40,49 @@ function updateAll() {
         }
     );
 
-    // let p1 = new Promise(
-    //     function(resolve, reject) {
-    //
-    //         // Update keywords trends
-    //         Keyword.get((keywords) => {
-    //             keywords.forEach((k, index) => {
-    //                 const keyword = k;
-    //                 GoogleTrends.getByKeyword(keyword.mid, (data) => {
-    //                     Trend.create({
-    //                         parentType: 'keyword',
-    //                         parentName: keyword.title,
-    //                         parentId: keyword._id,
-    //                         values: data
-    //                     }, () => {
-    //                         fs.appendFile(logFile, `Keyword ${keyword.title} updated !\n`, () => {});
-    //                     });
-    //
-    //                     // Last
-    //                     if (index === keywords.length - 1) {
-    //                         resolve();
-    //                     }
-    //                 }, () => {
-    //                     fs.appendFile(logFile, `Keyword ${keyword.title} failed to update ! (failed retrieve trends)\n`, () => {});
-    //                     fs.appendFile(logFile, `${data}\n`, () => {});
-    //                 });
-    //             });
-    //         });
-    //
-    //     }
-    // );
+    let p1 = new Promise(
+        function(resolve, reject) {
+
+            // Update keywords trends
+            Keyword.get((keywords) => {
+                keywords.forEach((k, index) => {
+                    const keyword = k;
+
+                    Keyword.setTwitterAvatar({
+                        id: keyword._id,
+                        twitterUsername: keyword.twitterName
+                    }, () => {
+                        if (index === keywords.length - 1) {
+                            resolve();
+                        }
+                    });
+
+
+
+
+                    // GoogleTrends.getByKeyword(keyword.mid, (data) => {
+                    //     Trend.create({
+                    //         parentType: 'keyword',
+                    //         parentName: keyword.title,
+                    //         parentId: keyword._id,
+                    //         values: data
+                    //     }, () => {
+                    //         fs.appendFile(logFile, `Keyword ${keyword.title} updated !\n`, () => {});
+                    //     });
+                    //
+                    //     // Last
+                    //     if (index === keywords.length - 1) {
+                    //         resolve();
+                    //     }
+                    // }, () => {
+                    //     fs.appendFile(logFile, `Keyword ${keyword.title} failed to update ! (failed retrieve trends)\n`, () => {});
+                    //     fs.appendFile(logFile, `${data}\n`, () => {});
+                    // });
+                });
+            });
+
+        }
+    );
 
     let p2 = new Promise(
         function(resolve, reject) {
@@ -145,7 +158,7 @@ function updateAll() {
         }
     );
 
-    Promise.all([p0, p2, p3]).then(values => {
+    Promise.all([p0, p1, p2, p3]).then(values => {
         // Delete old trends
         for (trend of oldTrends) {
             Trend.delete(trend, (data) => {

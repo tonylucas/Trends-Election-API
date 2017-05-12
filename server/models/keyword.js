@@ -1,11 +1,13 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'),
+request        = require('request');
 
 // Model
 const keywordSchema = new mongoose.Schema({
     title: String,
     mid: String,
     type: String,
-    twitterName: String
+    twitterName: String,
+    twitterAvatar: String
 });
 
 const Keyword = mongoose.model('Keyword', keywordSchema);
@@ -83,4 +85,23 @@ exports.delete = (id, callback) => {
         console.log("Keyword supprimé : " + keyword);
         callback(keyword)
     });
+};
+
+// Set Twitter avatar URL
+exports.setTwitterAvatar = (options, callback) => {
+    request(`https://twitter.com/${options.twitterUsername}/profile_image?size=original`, (error, response, body) => {
+        const twitterAvatarUrl = response.request.href;
+
+        Keyword.update({ _id: options.id }, { $set: { twitterAvatar: twitterAvatarUrl }}, () => {
+            callback();
+        });
+
+        // Keyword.findByIdAndUpdate(options.id, { $set: { twitterAvatar: twitterAvatarUrl }}, { new: true }, function (err, keyword) {
+        //     if (err) return handleError(err);
+        //
+        //     console.log(keyword);
+        // });
+
+    });
+
 };
