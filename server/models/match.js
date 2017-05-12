@@ -2,10 +2,12 @@ const mongoose = require('mongoose');
 
 // Model
 const matchSchema = new mongoose.Schema({
-    name: String,
+    title: String,
+    subTitle: String,
     keywords: [String],
     createdAt: Date,
-    type: String
+    endDate: String,
+    parentMatchId: String
 }, {
     timestamps: true
 });

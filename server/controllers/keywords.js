@@ -19,7 +19,7 @@ router.get('/:keyword_id', (req, res) => {
 
 // Create keyword and send back all keywords after creation
 router.post('/', (req, res) => {
-    Keyword.create(req.body.title, req.body.mid, req.body.type, (keyword) => {
+    Keyword.create(req.body.keyword.title, req.body.keyword.mid, req.body.keyword.type, req.body.twitterName, (keyword) => {
         console.log(keyword);
     });
 });

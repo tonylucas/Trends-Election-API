@@ -31,7 +31,7 @@ router.post('/', (req, res) => {
         parentName: req.body.parentName,
         parentId: req.body.parentId,
         values: req.body.values,
-        period: "3-month"
+        period: req.body.period
     }, (trend) => {
         res.send(trend);
     });

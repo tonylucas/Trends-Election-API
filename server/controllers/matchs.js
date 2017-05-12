@@ -18,17 +18,25 @@ router.get('/', (req, res) => {
             let keywords = matchs[j].keywords;
             let count = 0;
 
-            keywords.forEach((keyword, index) => {
-                Keywords.getKeywordByMid(keyword, function(data) {
-                    count++;
-                    keywords[index] = data;
-                    if (count == keywords.length && (j + 1 == matchs.length)) {
-			setTimeout(function(){
-                            res.json(matchs);
-                        });
-                    }
+            if(keywords.length){
+                keywords.forEach((keyword, index) => {
+                    Keywords.getKeywordByMid(keyword, function(data) {
+                        count++;
+                        keywords[index] = data;
+                        if (count == keywords.length && (j + 1 == matchs.length)) {
+                            setTimeout(function(){
+                                res.json(matchs);
+                            });
+                        }
+                    });
                 });
-            });
+            } else {
+                if (j + 1 == matchs.length) {
+                    setTimeout(function(){
+                        res.json(matchs);
+                    });
+                }
+            }
 
         }
     });
@@ -47,9 +55,11 @@ router.get('/:match_id', (req, res) => {
 router.post('/', (req, res) => {
     console.log("Creating new match");
     Match.create({
-        name: req.body.name,
+        title: req.body.title,
+        subTitle: req.body.subTitle,
         keywords: req.body.keywords,
-        type: req.body.type
+        endDate: req.body.endDate,
+        parentMatchId: req.body.parentMatchId
     }, (match) => {
         res.json(match);
     });

@@ -6,7 +6,7 @@ const trendSchema = new mongoose.Schema({
     parentName: String,
     parentId: String,
     values: String,
-    period: String,
+    period: String
 }, {
     timestamps: true
 });
@@ -39,7 +39,7 @@ exports.getById = (id, callback) => {
 
 exports.getByParentId = (parentId, callback) => {
     // Use mongoose to get the trend in the database
-    Trend.findOne({
+    Trend.find({
         parentId: parentId
     }, (err, trend) => {
         // if there is an error retrieving, send the error. nothing after res.send(err) will execute

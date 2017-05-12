@@ -1,9 +1,9 @@
-const express = require('express'),
-    schedule = require('node-schedule'),
-    fs = require('fs'),
-    Trend = require('./models/trend'),
-    Keyword = require('./models/keyword'),
-    Match = require('./models/match'),
+const express    = require('express'),
+    schedule     = require('node-schedule'),
+    fs           = require('fs'),
+    Trend        = require('./models/trend'),
+    Keyword      = require('./models/keyword'),
+    Match        = require('./models/match'),
     GoogleTrends = require('./models/google-trends');
 
 
@@ -20,17 +20,16 @@ schedule.scheduleJob('0 0 */2 * * *', () => {
     updateAll();
 });
 
-
 let logFile = 'logs.txt';
 
 function updateAll() {
-
+    let logFile = 'logs.txt';
     fs.appendFile(logFile, `\n--------------------\n${new Date()} \n`, () => {});
 
     // Getting old trends to be replaced
     let oldTrends = [];
 
-    var p0 = new Promise(
+    let p0 = new Promise(
         function(resolve, reject) {
             Trend.get((trends) => {
                 for (trend of trends) {
@@ -41,51 +40,57 @@ function updateAll() {
         }
     );
 
-    var p1 = new Promise(
-        function(resolve, reject) {
+    // let p1 = new Promise(
+    //     function(resolve, reject) {
+    //
+    //         // Update keywords trends
+    //         Keyword.get((keywords) => {
+    //             keywords.forEach((k, index) => {
+    //                 const keyword = k;
+    //                 GoogleTrends.getByKeyword(keyword.mid, (data) => {
+    //                     Trend.create({
+    //                         parentType: 'keyword',
+    //                         parentName: keyword.title,
+    //                         parentId: keyword._id,
+    //                         values: data
+    //                     }, () => {
+    //                         fs.appendFile(logFile, `Keyword ${keyword.title} updated !\n`, () => {});
+    //                     });
+    //
+    //                     // Last
+    //                     if (index === keywords.length - 1) {
+    //                         resolve();
+    //                     }
+    //                 }, () => {
+    //                     fs.appendFile(logFile, `Keyword ${keyword.title} failed to update ! (failed retrieve trends)\n`, () => {});
+    //                     fs.appendFile(logFile, `${data}\n`, () => {});
+    //                 });
+    //             });
+    //         });
+    //
+    //     }
+    // );
 
-            // Update keywords trends
-            Keyword.get((keywords) => {
-                keywords.forEach((k, index) => {
-                    const keyword = k;
-                    GoogleTrends.getByKeyword(keyword.mid, (data) => {
-                        Trend.create({
-                            parentType: 'keyword',
-                            parentName: keyword.title,
-                            parentId: keyword._id,
-                            values: data
-                        }, () => {
-                            fs.appendFile(logFile, `Keyword ${keyword.title} updated !\n`, () => {});
-                        });
-
-                        // Last
-                        if (index === keywords.length - 1) {
-                            resolve();
-                        }
-                    }, () => {
-                        fs.appendFile(logFile, `Keyword ${keyword.title} failed to update ! (failed retrieve trends)\n`, () => {});
-                        fs.appendFile(logFile, `${data}\n`, () => {});
-                    });
-                });
-            });
-
-        }
-    );
-
-    var p2 = new Promise(
+    let p2 = new Promise(
         function(resolve, reject) {
             // Update matchs trends
+
             Match.get((matchs) => {
                 matchs.forEach((m, index) => {
                     const match = m;
-                    GoogleTrends.getByKeywords(match.keywords, (data) => {
+                    GoogleTrends.getByKeywords({
+                        keywords: match.keywords,
+                        endDate: match.endDate,
+                        period: "now 7-d"
+                    }, (data) => {
                         Trend.create({
                             parentType: 'match',
                             parentName: match.name,
                             parentId: match._id,
-                            values: data
-                        }, () => {
-                            fs.appendFile(logFile, `Match ${match.name} updated !\n`, () => {});
+                            period: "now 7-d",
+                            values: JSON.stringify(data)
+                        }, (err) => {
+                            fs.appendFile(logFile, `Match ${match.title} (${match.subTitle}) updated ! (7 jours)\n`, () => {});
                         });
 
                         // Last
@@ -93,16 +98,54 @@ function updateAll() {
                             resolve();
                         }
                     }, (data) => {
-                        fs.appendFile(logFile, `Match ${match.name} failed to update ! (failed retrieve trends)\n`, () => {});
+                        fs.appendFile(logFile, `Match ${match.title} (${match.subTitle}) failed to update ! (failed retrieve trends)\n`, () => {});
                         fs.appendFile(logFile, `${data}\n`, () => {});
                     });
+
 
                 });
             });
         }
     );
 
-    Promise.all([p0, p1, p2]).then(values => {
+    let p3 = new Promise(
+        function(resolve, reject) {
+            // Update matchs trends
+            Match.get((matchs) => {
+                matchs.forEach((m, index) => {
+                    const match = m;
+
+                    GoogleTrends.getByKeywords({
+                        keywords: match.keywords,
+                        endDate: match.endDate,
+                        period: "now 1-d"
+                    }, (data) => {
+                        Trend.create({
+                            parentType: 'match',
+                            parentName: match.name,
+                            parentId: match._id,
+                            period: "now 1-d",
+                            values: JSON.stringify(data)
+                        }, (err) => {
+                            fs.appendFile(logFile, `Match ${match.title} (${match.subTitle}) updated ! (24h)\n`, () => {});
+                        });
+
+                        // Last
+                        if (index === matchs.length - 1) {
+                            resolve();
+                        }
+                    }, (data) => {
+                        fs.appendFile(logFile, `Match ${match.title} (${match.subTitle}) failed to update ! (failed retrieve trends)\n`, () => {});
+                        fs.appendFile(logFile, `${data}\n`, () => {});
+                    });
+
+
+                });
+            });
+        }
+    );
+
+    Promise.all([p0, p2, p3]).then(values => {
         // Delete old trends
         for (trend of oldTrends) {
             Trend.delete(trend, (data) => {

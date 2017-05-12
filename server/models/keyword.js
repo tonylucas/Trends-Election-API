@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const keywordSchema = new mongoose.Schema({
     title: String,
     mid: String,
-    type: String
+    type: String,
+    twitterName: String
 });
 
 const Keyword = mongoose.model('Keyword', keywordSchema);
@@ -37,13 +38,14 @@ exports.getById = (id, callback) => {
 
 
 // Create keyword and send back all keywords after creation
-exports.create = (title, mid, type, callback) => {
+exports.create = (title, mid, type, twitterName, callback) => {
     console.log("Creating new keyword");
 
     Keyword.create({
         title: title,
         mid: mid,
-        type: type
+        type: type,
+        twitterName: twitterName
     }, (err, keyword) => {
         if (err)
             return callback(err);
