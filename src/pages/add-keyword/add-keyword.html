@@ -1,26 +1,31 @@
-<div class="row column">
-    <h1>
-        Add Keyword
-    </h1>
-</div>
+<div class="row">
+    <div class="columns small-centered small-5">
+        <h1>
+            Add Keyword
+        </h1>
+        
+        <label>
+            Mot-clé
+            <input type="text"
+              ng2-auto-complete
+              [(ngModel)]="selectedKeyword.title"
+              placeholder="Enter keyword"
+              [source]="googleGeoCode"
+              [list-formatter]="formatAutocomplete"
+              path-to-data="default.topics"
+              display-property-name="title"
+              min-chars="2"
+              (valueChanged)="autocompleteSelected($event)"
+              >
+        </label>
 
+        <label>
+            Pseudo Twitter
+            <input type="text" [(ngModel)]="twitterName">
+        </label>
 
-<div class="row column">
-    <label>
-        Mot-clé
-        <input type="text"
-          ng2-auto-complete
-          [(ngModel)]="selectedKeyword.title"
-          placeholder="Enter keyword"
-          [source]="googleGeoCode"
-          [list-formatter]="formatAutocomplete"
-          path-to-data="default.topics"
-          display-property-name="title"
-          min-chars="2"
-          (valueChanged)="autocompleteSelected($event)"
-          >
-    </label>
-    <button class="button success" (click)="save()">
-        Ajouter
-    </button>
+        <button class="button success" (click)="save()">
+            Ajouter
+        </button>
+    </div>
 </div>

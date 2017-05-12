@@ -13,6 +13,7 @@ import { AppComponent } from '../../app/app.component';
 export class AddKeyword {
 
     public selectedKeyword: Keyword;
+    public twitterName: string;
     public googleGeoCode: string = AppComponent.API_ENDPOINT + 'google-autocomplete/:keyword';
 
     constructor(public keywordsProvider: KeywordsProvider, private router: Router) {
@@ -34,8 +35,10 @@ export class AddKeyword {
     }
 
     save(): void {
-        console.log(this.selectedKeyword);
-        this.keywordsProvider.createKeyword(this.selectedKeyword).subscribe((res) => {
+        this.keywordsProvider.createKeyword({
+            keyword: this.selectedKeyword,
+            twitterName: this.twitterName
+        }).subscribe((res) => {
             this.router.navigate(['/keywords']);
         });
 
