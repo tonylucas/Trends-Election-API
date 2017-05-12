@@ -13,7 +13,7 @@
 <div class="row" data-equalizer data-equalize-on-stack="false">
     <div class="columns small-6 medium-4 end" *ngFor="let keyword of keywords">
         <div class="card-divider" data-equalizer-watch>
-            <strong>{{keyword.title}}</strong>
+            <strong>{{keyword.title}}</strong> ({{keyword.twitterName}})
             <br>
             <small>{{keyword.type}}</small>
             <br>
@@ -37,7 +37,7 @@
 <hr>
 
 <div class="row">
-    <div class="columns medium-8">
+    <div class="columns medium-6">
         <div class="row column">
             <h1>
                 Matchs
@@ -47,16 +47,15 @@
             </button>
         </div>
         <div class="row">
-            <div class="columns medium-6 end" *ngFor="let match of matchs">
+            <div class="column end" *ngFor="let match of matchs">
                 <div class="card-divider bold">
-                    <strong>{{match.name}}</strong>
+                    <strong>{{match.title}}</strong>, {{match.subTitle}}
                 </div>
                 <div class="card-section">
-                    <p *ngIf="match.createdAt">{{match.values}}</p>
                     <p *ngIf="!match.createdAt">Aucune donnée</p>
                     <p>Updated at {{match.createdAt | date: 'dd/MM/yyyy H:mm:ss'}}</p>
                     <span *ngFor="let keyword of match.keywords; let last = last">
-                        {{keyword}} <span *ngIf="!last">|</span>
+                        {{keyword}}<span *ngIf="!last">, </span>
                     </span>
                     <button class="button alert tiny" (click)="deleteMatch(match._id)">
                         Supprimer
@@ -65,7 +64,7 @@
             </div>
         </div>
     </div>
-    <div class="columns medium-4">
+    <div class="columns medium-6">
         <div class="row column">
             <h3>
                 Create match
@@ -74,16 +73,37 @@
 
         <div class="row column">
             <div class="">
-                <label>Name</label>
-                <input type="text" [(ngModel)]="newMatch.name">
                 <label>
-                    keywords
+                    Name
+                    <input type="text" [(ngModel)]="newMatch.title">
                 </label>
+                <label>
+                    Subtitle
+                    <input type="text" [(ngModel)]="newMatch.subTitle">
+                </label>
+
+                <label>
+                    End date
+                    <input type="date" [(ngModel)]="newMatch.endDate" name="endDate">
+                </label>
+
+                <label>
+                    Parent match (optional)
+                </label>
+                <select [(ngModel)]="newMatch.parentMatchId">
+                    <option value="" selected="">Choose</option>
+                    <option *ngFor="let match of matchs" [(value)]="match._id">{{match.title}}, {{match.subTitle}}</option>
+                </select>
+
+                <label>
+                    Keywords
+                </label>
+
                 <select [(ngModel)]="newMatch.keywords" multiple>
                     <option *ngFor="let keyword of keywords" [(value)]="keyword.mid">{{keyword.title}}</option>
                 </select>
                 <button class="button success" (click)="createMatch(newMatch.keywords)">
-                    Créer
+                    Create
                 </button>
             </div>
         </div>

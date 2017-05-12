@@ -22,8 +22,11 @@ export class ListKeywords implements OnInit {
     keywords: Keyword[];
     matchs: Match[];
     newMatch: {
-        name: string,
-        keywords: string[]
+        title: string,
+        subTitle: string,
+        keywords: string[],
+        endDate: string,
+        parentMatchId: string
     };
 
     constructor(
@@ -63,8 +66,11 @@ export class ListKeywords implements OnInit {
         });
 
         this.newMatch = {
-            name: "",
-            keywords: []
+            title: "",
+            subTitle: "",
+            keywords: [],
+            endDate: "",
+            parentMatchId: ""
         };
 
     }
@@ -131,11 +137,16 @@ export class ListKeywords implements OnInit {
     }
 
     createMatch(keywords: string[]): void {
+        console.log(this.newMatch);
         let match = {
-            name: this.newMatch.name,
+            title: this.newMatch.title,
+            subTitle: this.newMatch.subTitle,
             keywords: this.newMatch.keywords,
+            endDate: this.newMatch.endDate,
+            parentMatchId: this.newMatch.parentMatchId,
             type: "",
         };
+        console.log(match);
         this.matchsProvider.createMatch(match)
             .subscribe((match) => {
                 console.log(match);
