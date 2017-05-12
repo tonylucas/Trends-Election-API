@@ -26,7 +26,6 @@
             <p *ngIf="keyword.createdAt">
                 Updated at {{keyword.createdAt | date: 'dd/MM/yyyy H:mm:ss'}}
             </p>
-            <p *ngIf="!keyword.createdAt">Aucune donnée</p>
             <button class="button alert tiny" (click)="deleteKeyword(keyword._id)">
                 Supprimer
             </button>
@@ -53,10 +52,11 @@
                 </div>
                 <div class="card-section">
                     <p *ngIf="!match.createdAt">Aucune donnée</p>
-                    <p>Updated at {{match.createdAt | date: 'dd/MM/yyyy H:mm:ss'}}</p>
+                    <p>Updated at {{match.updatedAt | date: 'dd/MM/yyyy H:mm:ss'}}</p>
                     <span *ngFor="let keyword of match.keywords; let last = last">
-                        {{keyword}}<span *ngIf="!last">, </span>
+                        {{keyword.title}}<span *ngIf="!last">, </span>
                     </span>
+                    <br>
                     <button class="button alert tiny" (click)="deleteMatch(match._id)">
                         Supprimer
                     </button>

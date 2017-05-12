@@ -1,7 +1,8 @@
 const express    = require('express'),
     router       = express.Router(),
     googleTrends = require('google-trends-api'),
-    mongoose     = require('mongoose');
+    mongoose     = require('mongoose'),
+    moment = require('moment');
 
 
 
@@ -45,50 +46,38 @@ exports.getByKeywords = (args, callback, callbackError) => {
 
     const period   = args.period;
     const keywords = args.keywords;
-    const today    = new Date();
+    const today    = moment();
 
     let startDate;
     let endDate = today
 
-    // if (typeof args.endDate !== 'undefined') {
-    //     let d = args.endDate.split('-');
-    //     endDate = new Date(d[0], d[1]-1, d[2]);
-    //     // endDate = addDays(endDate, 1);
-    // }
-    // console.log(args.endDate);
-    // console.log(args.endDate.replace(/-/g, ','));
-    // console.log(endDate);
-    // console.log(new Date("2017,04,23"));
+    if (typeof args.endDate !== 'undefined') {
+        endDate = moment(args.endDate, "YYYY-MM-DD").set('hour', 12);
+    }
 
     switch (period) {
         case "now 1-d":
-            startDate = new Date(today.setDate(endDate.getDate() - 1));
+            // startDate = new Date(today.setDate(endDate.getDate() - 1));
+            startDate = moment(endDate).subtract(1, 'day');
             break;
 
         case "now 7-d":
-            startDate = new Date(today.setDate(endDate.getDate() - 6.99));
+            // startDate = new Date(today.setDate(endDate.getDate() - 6.99));
+            startDate = moment(endDate).subtract(6, 'day');
             break;
 
         default:
             break
-
     }
-
-    console.log(startDate);
-    console.log(endDate);
-    console.log("----");
-
-    const tenDaysAgo = new Date(today.setDate(today.getDate() - 6.99));
-    // const threeMonthsAgo = new Date(today.setMonth(today.getMonth() - 3));
 
     const options = {
         keyword: keywords,
-        startTime: startDate, // defaults new Date('2004-01-01')
-        // startTime: threeMonthsAgo,
-        endTime: endDate,
+        startTime: startDate.toDate(), // defaults new Date('2004-01-01')
+        endTime: endDate.toDate(),
         geo: 'FR',
         hl: 'fr' // Preferred language code for results
     }
+
 
     googleTrends.interestOverTime(options, function(err, results) {
         if (err) {

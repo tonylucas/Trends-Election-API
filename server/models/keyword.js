@@ -90,18 +90,10 @@ exports.delete = (id, callback) => {
 // Set Twitter avatar URL
 exports.setTwitterAvatar = (options, callback) => {
     request(`https://twitter.com/${options.twitterUsername}/profile_image?size=original`, (error, response, body) => {
-        const twitterAvatarUrl = response.request.href;
+        const twitterAvatarUrl = response.request.href.replace('.jpg', '_400x400.jpg');
 
         Keyword.update({ _id: options.id }, { $set: { twitterAvatar: twitterAvatarUrl }}, () => {
             callback();
         });
-
-        // Keyword.findByIdAndUpdate(options.id, { $set: { twitterAvatar: twitterAvatarUrl }}, { new: true }, function (err, keyword) {
-        //     if (err) return handleError(err);
-        //
-        //     console.log(keyword);
-        // });
-
     });
-
 };
