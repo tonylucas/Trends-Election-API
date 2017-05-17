@@ -7,7 +7,8 @@ const matchSchema = new mongoose.Schema({
     keywords: [String],
     createdAt: Date,
     endDate: String,
-    parentMatchId: String
+    parentMatchId: String,
+    geo: String
 }, {
     timestamps: true
 });

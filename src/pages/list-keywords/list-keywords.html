@@ -51,7 +51,6 @@
                     <strong>{{match.title}}</strong>, {{match.subTitle}}
                 </div>
                 <div class="card-section">
-                    <p *ngIf="!match.createdAt">Aucune donnée</p>
                     <p>Updated at {{match.updatedAt | date: 'dd/MM/yyyy H:mm:ss'}}</p>
                     <span *ngFor="let keyword of match.keywords; let last = last">
                         {{keyword.title}}<span *ngIf="!last">, </span>
@@ -80,6 +79,11 @@
                 <label>
                     Subtitle
                     <input type="text" [(ngModel)]="newMatch.subTitle">
+                </label>
+
+                <label>
+                    Country
+                    <input type="text" [(ngModel)]="newMatch.geo" placeholder="FR, US...">
                 </label>
 
                 <label>

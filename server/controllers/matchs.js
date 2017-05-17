@@ -59,7 +59,8 @@ router.post('/', (req, res) => {
         subTitle: req.body.subTitle,
         keywords: req.body.keywords,
         endDate: req.body.endDate,
-        parentMatchId: req.body.parentMatchId
+        parentMatchId: req.body.parentMatchId,
+        geo: req.body.geo
     }, (match) => {
         res.json(match);
     });

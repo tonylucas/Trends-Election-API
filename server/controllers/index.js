@@ -6,6 +6,7 @@ router.use('/trends', require('./trends'));
 router.use('/matchs', require('./matchs'));
 router.use('/google-trends', require('./google-trends'));
 router.use('/google-autocomplete', require('./google-autocomplete'));
+router.use('/cron', require('./cron'));
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

@@ -26,7 +26,8 @@ export class ListKeywords implements OnInit {
         subTitle: string,
         keywords: string[],
         endDate: string,
-        parentMatchId: string
+        parentMatchId: string,
+        geo: string
     };
 
     constructor(
@@ -70,7 +71,8 @@ export class ListKeywords implements OnInit {
             subTitle: "",
             keywords: [],
             endDate: "",
-            parentMatchId: ""
+            parentMatchId: "",
+            geo: ""
         };
 
     }
@@ -137,16 +139,16 @@ export class ListKeywords implements OnInit {
     }
 
     createMatch(keywords: string[]): void {
-        console.log(this.newMatch);
         let match = {
             title: this.newMatch.title,
             subTitle: this.newMatch.subTitle,
             keywords: this.newMatch.keywords,
             endDate: this.newMatch.endDate,
             parentMatchId: this.newMatch.parentMatchId,
+            geo: this.newMatch.geo,
             type: "",
         };
-        console.log(match);
+        // console.log(match);
         this.matchsProvider.createMatch(match)
             .subscribe((match) => {
                 console.log(match);

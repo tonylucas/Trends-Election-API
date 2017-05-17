@@ -46,6 +46,7 @@ exports.getByKeywords = (args, callback, callbackError) => {
 
     const period   = args.period;
     const keywords = args.keywords;
+    const geo = args.geo;
     const today    = moment();
 
     let startDate;
@@ -74,7 +75,7 @@ exports.getByKeywords = (args, callback, callbackError) => {
         keyword: keywords,
         startTime: startDate.toDate(), // defaults new Date('2004-01-01')
         endTime: endDate.toDate(),
-        geo: 'FR',
+        geo: geo,
         hl: 'fr' // Preferred language code for results
     }
 
