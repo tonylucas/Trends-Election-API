@@ -20,7 +20,10 @@ const app = express();
 
 
 // Configuration
-mongoose.connect('mongodb://localhost/api');
+// Deployment identifiers are read from the environment; see README.
+mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost/api');
+
+const corsOrigins = (process.env.CORS_ORIGINS || 'http://localhost:8100,http://localhost:4200').split(',');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,13 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Use it before all route definitions
 app.use(cors({
-    origin: [
-        "http://localhost:8100",
-        "http://localhost:4200",
-        "https://178.62.124.181:8080",
-        "https://tony-lucas.com:8080",
-        "https://app.tony-lucas.com"
-    ],
+    origin: corsOrigins,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
 }));
 
@@ -69,8 +66,9 @@ app.use(function(err, req, res, next) {
     res.render('error');
 });
 
-app.listen(3000, function() {
-    console.log('Example app listening on port 3000!')
+const port = process.env.PORT || 3000;
+app.listen(port, function() {
+    console.log(`API en écoute sur le port ${port}`)
 });
 
 module.exports = app;

@@ -13,15 +13,10 @@ import { KeywordsProvider } from '../providers/keywords';
 import { TrendsProvider } from '../providers/trends';
 import { MatchsProvider } from '../providers/matchs';
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
+import { environment } from '../environments/environment';
 
 
-const myFirebaseConfig = {
-    apiKey: "AIzaSyAJqeG7TM_SUQ2N4n8L2zDTDdyufW7bo_w",
-    authDomain: "api-projet-perso.firebaseapp.com",
-    databaseURL: "https://api-projet-perso.firebaseio.com",
-    storageBucket: "api-projet-perso.appspot.com",
-    messagingSenderId: "23073666257"
-};
+const myFirebaseConfig = environment.firebase;
 
 const myFirebaseAuthConfig = {
     provider: AuthProviders.Password,
