@@ -2,14 +2,14 @@
     "apps": [
         {
             "name": "angular",
-            "cwd": "/opt/mean/dist",
+            "cwd": "<deploy-root>/dist",
             "script": "/usr/local/bin/http-server",
             "watch": true
         },
         {
             "name": "api",
-            "cwd": "/opt/mean/server",
-            "script": "/opt/mean/server/app.js",
+            "cwd": "<deploy-root>/server",
+            "script": "<deploy-root>/server/app.js",
             "watch": true
         }
     ]

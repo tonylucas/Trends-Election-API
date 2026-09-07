@@ -11,7 +11,7 @@ router.use('/cron', require('./cron'));
 /* GET home page. */
 router.get('/', function(req, res, next) {
     res.render('index', {
-        title: 'API Projet Perso 😇'
+        title: 'Trends Election API'
     });
 });
 

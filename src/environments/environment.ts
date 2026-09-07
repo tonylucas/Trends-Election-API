@@ -5,5 +5,13 @@
 
 export const environment = {
   production: false,
-  apiEndpoint: 'http://localhost:3000/'
+  apiEndpoint: 'http://localhost:3000/',
+  // Fill in with your own Firebase project — the original one is deactivated.
+  firebase: {
+    apiKey: '<firebase-api-key>',
+    authDomain: '<project>.firebaseapp.com',
+    databaseURL: 'https://<project>.firebaseio.com',
+    storageBucket: '<project>.appspot.com',
+    messagingSenderId: '<sender-id>'
+  }
 };
